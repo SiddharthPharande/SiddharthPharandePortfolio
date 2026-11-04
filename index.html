@@ -14,25 +14,28 @@
   --pine:#1F3A36; --slate:#566F6A; --sand:#EDE6D6; --line:#CFDED6; --white:#FBFDFC;
   --serif:"Instrument Serif",Georgia,"Times New Roman",serif;
   --sans:"Hanken Grotesk","Segoe UI",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --lift:0 0 0 .5px rgba(31,58,54,.14),0 1px 2px rgba(31,58,54,.12),0 10px 28px -8px rgba(31,58,54,.16),0 34px 70px -26px rgba(31,58,54,.24);
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:72px}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
 body{margin:0;background:var(--mist);color:var(--pine);font:400 1.0625rem/1.65 var(--sans)}
 a{color:var(--deep)}
 a:focus-visible,button:focus-visible{outline:3px solid var(--deep);outline-offset:3px;border-radius:4px}
 .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
 
-/* top bar */
-header.bar{position:sticky;top:0;z-index:5;background:rgba(241,245,242,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-.bar .wrap{display:flex;justify-content:space-between;align-items:center;height:60px}
-.mark{font:400 1.35rem var(--serif);color:var(--pine);text-decoration:none}
-.bar nav{display:flex;gap:22px}
-.bar nav a{color:var(--slate);text-decoration:none;font-size:.95rem;font-weight:500}
-.bar nav a:hover{color:var(--pine)}
+/* top bar: a floating liquid-glass pill */
+header.bar{position:sticky;top:12px;z-index:5;width:min(1080px,calc(100% - 24px));margin:12px auto 0;--r:999px;--ring:11px}
+header.bar:hover{scale:1}
+.bar .lg-content{display:flex;justify-content:space-between;align-items:center;height:60px;padding:0 12px 0 26px}
+.mark{font:400 1.35rem var(--serif);color:var(--pine);text-decoration:none;white-space:nowrap}
+.bar nav{display:flex;gap:4px}
+.bar nav a{color:var(--slate);text-decoration:none;font-size:.95rem;font-weight:500;padding:8px 14px;border-radius:999px;transition:background .35s var(--ease),color .35s var(--ease)}
+.bar nav a:hover{color:var(--pine);background:rgba(255,255,255,.6);box-shadow:inset 0 1px 0 rgba(255,255,255,.9)}
 
 /* hero */
-.hero{background:var(--seafoam);border-bottom:1px solid var(--line)}
-.hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;padding-top:80px;padding-bottom:80px}
+.hero{background:linear-gradient(180deg,rgba(220,235,227,.8),rgba(220,235,227,0));margin-top:-72px;padding-top:72px}
+.hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;padding-top:64px;padding-bottom:80px}
 .hero h1{font:400 clamp(3rem,7vw,5.4rem)/.98 var(--serif);letter-spacing:-.015em;margin:0 0 22px}
 .hero .lead{font:400 1.25rem/1.55 var(--sans);color:var(--slate);max-width:34ch;margin:0 0 14px}
 .hero .where{color:var(--deep);font-weight:500;margin:0 0 30px}
@@ -40,8 +43,9 @@ header.bar{position:sticky;top:0;z-index:5;background:rgba(241,245,242,.92);back
 .btn{display:inline-block;padding:13px 22px;border-radius:999px;font-weight:600;text-decoration:none;border:1.5px solid var(--pine)}
 .btn.solid{background:var(--pine);color:var(--mist)}
 .btn.solid:hover{background:var(--deep);border-color:var(--deep)}
-.btn.ghost{color:var(--pine)}
-.btn.ghost:hover{background:var(--white)}
+.btn.ghost{color:var(--pine);background:rgba(255,255,255,.4);-webkit-backdrop-filter:blur(10px) saturate(1.5);backdrop-filter:blur(10px) saturate(1.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 6px 18px -8px rgba(31,58,54,.25);transition:background .35s var(--ease)}
+.btn.ghost:hover{background:rgba(255,255,255,.75)}
+.btn.solid{box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 10px 22px -10px rgba(31,58,54,.55)}
 .mol{width:100%;height:auto;display:block}
 .mol .b{fill:none;stroke:var(--pine);stroke-width:2.4;stroke-linecap:round}
 .mol .d{stroke:var(--deep);stroke-width:2}
@@ -63,26 +67,33 @@ h3{font:600 1.1rem/1.35 var(--sans);margin:0}
 .meta{color:var(--slate);font-size:.95rem;margin:2px 0 0}
 .about p{margin:0 0 16px;max-width:60ch}
 .chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:0}
-.chips li{background:var(--sand);padding:7px 14px;border-radius:999px;font-size:.93rem}
+.chips li{background:rgba(237,230,214,.6);-webkit-backdrop-filter:blur(8px) saturate(1.4);backdrop-filter:blur(8px) saturate(1.4);padding:7px 14px;border-radius:999px;font-size:.93rem;box-shadow:inset 0 1px 0 rgba(255,255,255,.85),0 0 0 .5px rgba(31,58,54,.12),0 6px 14px -8px rgba(31,58,54,.25)}
 
 /* timeline (experience, education and certifications are real sequences) */
 .tl{border-left:2px solid var(--sage);margin-left:6px;padding-left:28px}
-.item{position:relative;padding-bottom:30px}
-.item:last-child{padding-bottom:0}
-.item::before{content:"";position:absolute;left:-37px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--mist);border:2.5px solid var(--deep)}
+.item{margin-bottom:14px;padding:18px 24px;--r:18px}
+.item:last-child{margin-bottom:0}
+.item::after{content:"";position:absolute;z-index:2;left:-37px;top:25px;width:12px;height:12px;border-radius:50%;background:var(--mist);border:2.5px solid var(--deep)}
 .item ul{margin:10px 0 0;padding-left:18px;color:var(--slate)}
 .item li{margin:4px 0}
 .status{display:inline-block;background:var(--seafoam);color:var(--deep);font-size:.82rem;font-weight:600;padding:2px 10px;border-radius:999px;margin-left:8px}
 
 /* element-style skill tiles */
 .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;list-style:none;padding:0;margin:0}
-.tile{background:var(--white);border:1.5px solid var(--line);border-radius:10px;padding:14px 16px 16px;min-height:118px;display:flex;flex-direction:column;justify-content:space-between}
+.tile{--r:18px;padding:14px 16px 16px;transition:scale .6s var(--ease),box-shadow .6s var(--ease);min-height:118px;display:flex;flex-direction:column;justify-content:space-between}
+.tile:hover{scale:1.03}
 .tile b{font:400 2.4rem/1 var(--serif);color:var(--deep)}
 .tile span{font-size:.92rem;line-height:1.3;color:var(--pine)}
 
 /* contact */
-.contact{margin-top:96px;background:var(--pine);color:var(--mist)}
-.contact .wrap{padding-top:72px;padding-bottom:72px;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:end}
+.contact{margin-top:96px;background:var(--pine);color:var(--mist);position:relative;overflow:hidden;isolation:isolate}
+.contact::before,.contact::after{content:"";position:absolute;z-index:-1;border-radius:50%;pointer-events:none;will-change:transform}
+.contact::before{width:46vmax;height:46vmax;left:-10vmax;top:-22vmax;background:radial-gradient(circle,rgba(47,107,94,.95),rgba(47,107,94,0) 68%);animation:d2 24s ease-in-out infinite alternate}
+.contact::after{width:30vmax;height:30vmax;right:-6vmax;top:-12vmax;background:radial-gradient(circle,rgba(111,158,143,.6),rgba(111,158,143,0) 68%);animation:d3 28s ease-in-out infinite alternate}
+.contact .wrap>div:last-child{--r:26px;padding:28px 30px 30px}
+.contact .wrap>div:last-child::before{background:radial-gradient(260px circle at var(--mx,20%) var(--my,0%),rgba(255,255,255,.2),transparent 62%),linear-gradient(135deg,rgba(251,253,252,.16),rgba(251,253,252,.04) 50%,rgba(251,253,252,.1));box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 1px 0 0 rgba(255,255,255,.18),inset 0 0 0 1px rgba(255,255,255,.07)}
+.contact .wrap>div:last-child{box-shadow:0 0 0 .5px rgba(0,0,0,.3),0 20px 50px -18px rgba(0,0,0,.5)}
+.contact .wrap{position:relative;padding-top:72px;padding-bottom:72px;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:end}
 .contact h2{color:var(--mist);margin:0}
 .contact p{color:#BFD3CB;max-width:38ch;margin:14px 0 0}
 .contact ul{list-style:none;margin:0 0 20px;padding:0;display:grid;gap:10px}
@@ -95,17 +106,132 @@ footer{background:var(--pine);color:#9DB5AC;font-size:.9rem;padding:0 0 28px}
 @media (max-width:860px){
   .hero .wrap,.two,.contact .wrap{grid-template-columns:1fr}
   .hero .wrap{padding-top:48px;padding-bottom:48px}
-  .mol{max-width:360px}
+  .molstage{max-width:380px}
   .tiles{grid-template-columns:repeat(2,1fr)}
-  .bar nav{gap:14px}
+  .bar nav{gap:0}
+  .bar nav a{padding:8px 10px;font-size:.9rem}
   .bar nav a:nth-child(n+4){display:none}
+  .bar .lg-content{padding:0 8px 0 20px}
+  .loupe{width:60px;height:60px;--ring:12px}
+  .mark{font-size:1.2rem}
 }
+
+/* ================= LIQUID GLASS ================= */
+.defs{position:fixed;width:0;height:0;pointer-events:none}
+
+/* living backdrop: palette-only blobs + a faint grid so the glass has crisp lines to bend */
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.blob{position:absolute;border-radius:50%;will-change:transform}
+.b1{width:64vmax;height:64vmax;left:-18vmax;top:-22vmax;background:radial-gradient(circle at 40% 40%,rgba(111,158,143,.6),rgba(111,158,143,0) 68%);animation:d1 26s ease-in-out infinite alternate}
+.b2{width:58vmax;height:58vmax;right:-20vmax;top:6vmax;background:radial-gradient(circle at 40% 40%,rgba(47,107,94,.34),rgba(47,107,94,0) 68%);animation:d2 30s ease-in-out infinite alternate}
+.b3{width:62vmax;height:62vmax;left:6vmax;bottom:-32vmax;background:radial-gradient(circle at 45% 40%,#EDE6D6 0,rgba(237,230,214,.75) 40%,rgba(237,230,214,0) 68%);animation:d3 28s ease-in-out infinite alternate}
+.b4{width:46vmax;height:46vmax;right:4vmax;bottom:-18vmax;background:radial-gradient(circle at 45% 40%,#DCEBE3 0,rgba(220,235,227,0) 68%);animation:d1 32s ease-in-out infinite alternate-reverse}
+@keyframes d1{to{transform:translate3d(16vmax,10vmax,0) rotate(40deg) scale(1.12)}}
+@keyframes d2{to{transform:translate3d(-18vmax,9vmax,0) rotate(-35deg) scale(.92)}}
+@keyframes d3{to{transform:translate3d(12vmax,-12vmax,0) rotate(30deg) scale(1.16)}}
+.grid{position:absolute;inset:-64px;will-change:transform;animation:grid 48s linear infinite;
+  background-image:linear-gradient(rgba(31,58,54,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(31,58,54,.07) 1px,transparent 1px);background-size:64px 64px}
+@keyframes grid{to{transform:translate3d(64px,64px,0)}}
+
+/* the lens: layered glass, edge refraction ring, specular sheen */
+.lens{position:relative;border-radius:var(--r,28px);box-shadow:var(--lift);transition:scale .6s var(--ease),box-shadow .6s var(--ease)}
+.lens:hover{scale:1.012}
+.lens>.lg-glass,.lens>.lg-ring,.lens>.lg-shine{position:absolute;inset:0;border-radius:inherit;pointer-events:none}
+.lg-content{position:relative}
+.lg-glass{background:linear-gradient(135deg,rgba(255,255,255,.52),rgba(255,255,255,.16) 45%,rgba(255,255,255,.34));
+  -webkit-backdrop-filter:blur(10px) saturate(1.5) brightness(1.03);backdrop-filter:blur(10px) saturate(1.5) brightness(1.03)}
+.lg-ring{padding:var(--ring,18px);background:linear-gradient(135deg,rgba(255,255,255,.35),transparent 40%,rgba(255,255,255,.2));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude}
+/* Chromium only: SVG displacement inside backdrop-filter bends whatever sits behind the lens */
+.refract .warp .lg-glass{-webkit-backdrop-filter:url(#soft) blur(3px) saturate(1.5) brightness(1.03);backdrop-filter:url(#soft) blur(3px) saturate(1.5) brightness(1.03)}
+.refract .warp .lg-ring{background:none;-webkit-backdrop-filter:url(#edge) brightness(1.05) saturate(1.45);backdrop-filter:url(#edge) brightness(1.05) saturate(1.45)}
+.lg-shine{box-shadow:inset 0 1px 0 0 rgba(255,255,255,.95),inset 1px 0 0 0 rgba(255,255,255,.6),inset 0 -1px 0 0 rgba(31,58,54,.05);
+  background:radial-gradient(300px circle at var(--mx,22%) var(--my,0%),rgba(255,255,255,.6),transparent 60%)}
+.lens::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;pointer-events:none;
+  background:linear-gradient(135deg,rgba(255,255,255,1),rgba(255,255,255,.35) 28%,rgba(255,255,255,.05) 55%,rgba(255,255,255,.4) 82%,rgba(255,255,255,.95));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude}
+
+/* lightweight glass for repeated surfaces (timeline cards, skill tiles, contact panel) */
+.item,.tile,.contact .wrap>div:last-child{position:relative;isolation:isolate;border-radius:var(--r,18px);box-shadow:var(--lift)}
+.item::before,.tile::before,.contact .wrap>div:last-child::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(260px circle at var(--mx,20%) var(--my,0%),rgba(255,255,255,.7),transparent 62%),linear-gradient(135deg,rgba(255,255,255,.58),rgba(255,255,255,.22) 50%,rgba(255,255,255,.4));
+  -webkit-backdrop-filter:blur(12px) saturate(1.5);backdrop-filter:blur(12px) saturate(1.5);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 1px 0 0 rgba(255,255,255,.6),inset 0 0 0 1px rgba(255,255,255,.28)}
+
+/* hero: molecule on a calm glass slab, with a refracting loupe drifting over it */
+.molstage{position:relative}
+.molpanel{--r:36px}
+.molpanel .lg-content{padding:26px 26px 22px}
+.molpanel .mol .ring{fill:rgba(241,245,242,.9)}
+.loupe{position:absolute;left:0;top:0;z-index:2;width:80px;height:80px;--r:50%;--ring:16px;cursor:grab;touch-action:none;will-change:translate}
+.loupe:active{cursor:grabbing}
+.refract .bar.warp .lg-ring{-webkit-backdrop-filter:url(#rim) brightness(1.04) saturate(1.2);backdrop-filter:url(#rim) brightness(1.04) saturate(1.2)}
+.bar .lg-ring{background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.08))}
+.loupe:hover{scale:1.06}
+.loupe .lg-glass,.refract .loupe .lg-glass{background:linear-gradient(135deg,rgba(255,255,255,.1),rgba(255,255,255,0) 50%,rgba(255,255,255,.06));-webkit-backdrop-filter:saturate(1.35) contrast(1.08);backdrop-filter:saturate(1.35) contrast(1.08)}
+.loupe .lg-shine{background:radial-gradient(80px circle at var(--mx,30%) var(--my,12%),rgba(255,255,255,.5),transparent 70%)}
+.loupe .lg-ring{padding:0;-webkit-mask:radial-gradient(closest-side,transparent calc(100% - var(--ring)),#000 calc(100% - var(--ring) + 1px));mask:radial-gradient(closest-side,transparent calc(100% - var(--ring)),#000 calc(100% - var(--ring) + 1px));-webkit-mask-composite:source-over;mask-composite:add;background:linear-gradient(135deg,rgba(255,255,255,.18),transparent 45%,rgba(255,255,255,.1))}
+
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .lg-glass{background:rgba(251,253,252,.82)}
+  .item::before,.tile::before{background:rgba(251,253,252,.85)}
+}
+@media (prefers-reduced-motion:reduce){
+  .blob,.grid,.contact::before,.contact::after{animation:none}
+  .lens,.tile{transition:none}
+  html{scroll-behavior:auto}
+}
+@media (max-width:480px){.bar nav a:nth-child(n+3){display:none}}
 </style>
 </head>
 <body>
 
-<header class="bar">
-  <div class="wrap">
+<!-- Hidden SVG filters: turbulence-driven displacement; #edge adds RGB channel splitting. -->
+<svg class="defs" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="soft" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008 0.012" numOctaves="2" seed="3" result="n">
+        <animate attributeName="baseFrequency" dur="22s" values="0.008 0.012;0.013 0.008;0.008 0.012" repeatCount="indefinite"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="12" data-s="12" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="rim" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.006 0.02" numOctaves="1" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="16" data-s="16" xChannelSelector="R" yChannelSelector="G" result="dr"/>
+      <feColorMatrix in="dr" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="r"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="13" data-s="13" xChannelSelector="R" yChannelSelector="G" result="dg"/>
+      <feColorMatrix in="dg" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="g"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="10" data-s="10" xChannelSelector="R" yChannelSelector="G" result="db"/>
+      <feColorMatrix in="db" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="b"/>
+      <feBlend in="r" in2="g" mode="screen" result="rg"/>
+      <feBlend in="rg" in2="b" mode="screen"/>
+    </filter>
+    <filter id="edge" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="7" result="n">
+        <animate attributeName="baseFrequency" dur="16s" values="0.012 0.02;0.02 0.012;0.012 0.02" repeatCount="indefinite"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="90" data-s="90" xChannelSelector="R" yChannelSelector="G" result="dr"/>
+      <feColorMatrix in="dr" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="r"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="78" data-s="78" xChannelSelector="R" yChannelSelector="G" result="dg"/>
+      <feColorMatrix in="dg" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="g"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="66" data-s="66" xChannelSelector="R" yChannelSelector="G" result="db"/>
+      <feColorMatrix in="db" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="b"/>
+      <feBlend in="r" in2="g" mode="screen" result="rg"/>
+      <feBlend in="rg" in2="b" mode="screen"/>
+    </filter>
+  </defs>
+</svg>
+
+<div class="bg" aria-hidden="true">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div>
+  <div class="grid"></div>
+</div>
+
+<header class="bar lens warp">
+  <span class="lg-glass"></span><span class="lg-ring"></span><span class="lg-shine"></span>
+  <div class="lg-content">
     <a class="mark" href="#top">Siddharth Pharande</a>
     <nav aria-label="Sections">
       <a href="#about">About</a>
@@ -131,27 +257,37 @@ footer{background:var(--pine);color:#9DB5AC;font-size:.9rem;padding:0 0 28px}
         </div>
       </div>
 
-      <svg class="mol" viewBox="0 0 460 320" role="img" aria-label="Decorative drawing of a fused-ring molecule">
-        <g class="b">
-          <path style="--i:0" pathLength="1" d="M150 100 L202 130 L202 190 L150 220 L98 190 L98 130 Z"/>
-          <path style="--i:1" pathLength="1" d="M202 130 L254 100 L306 130 L306 190 L254 220 L202 190"/>
-          <path style="--i:2" pathLength="1" d="M306 130 L358 100 L410 130"/>
-          <path style="--i:3" pathLength="1" d="M254 220 L254 267"/>
-          <path style="--i:3" pathLength="1" d="M98 190 L46 220"/>
-        </g>
-        <g class="b d">
-          <path style="--i:4" pathLength="1" d="M110 137 L110 183"/>
-          <path style="--i:4" pathLength="1" d="M151 111 L192 134"/>
-          <path style="--i:5" pathLength="1" d="M192 186 L151 209"/>
-          <path style="--i:5" pathLength="1" d="M255 111 L296 135"/>
-          <path style="--i:6" pathLength="1" d="M296 185 L255 209"/>
-        </g>
-        <circle class="n" cx="358" cy="100" r="6"/>
-        <circle class="n" cx="410" cy="130" r="6"/>
-        <circle class="n" cx="46" cy="220" r="6"/>
-        <circle class="ring" cx="254" cy="284" r="17" stroke="#1F3A36" stroke-width="2"/>
-        <text x="254" y="289">OH</text>
-      </svg>
+      <div class="molstage">
+        <div class="molpanel lens">
+          <span class="lg-glass"></span><span class="lg-shine"></span>
+          <div class="lg-content">
+          <svg class="mol" viewBox="0 0 460 320" role="img" aria-label="Decorative drawing of a fused-ring molecule">
+            <g class="b">
+              <path style="--i:0" pathLength="1" d="M150 100 L202 130 L202 190 L150 220 L98 190 L98 130 Z"/>
+              <path style="--i:1" pathLength="1" d="M202 130 L254 100 L306 130 L306 190 L254 220 L202 190"/>
+              <path style="--i:2" pathLength="1" d="M306 130 L358 100 L410 130"/>
+              <path style="--i:3" pathLength="1" d="M254 220 L254 267"/>
+              <path style="--i:3" pathLength="1" d="M98 190 L46 220"/>
+            </g>
+            <g class="b d">
+              <path style="--i:4" pathLength="1" d="M110 137 L110 183"/>
+              <path style="--i:4" pathLength="1" d="M151 111 L192 134"/>
+              <path style="--i:5" pathLength="1" d="M192 186 L151 209"/>
+              <path style="--i:5" pathLength="1" d="M255 111 L296 135"/>
+              <path style="--i:6" pathLength="1" d="M296 185 L255 209"/>
+            </g>
+            <circle class="n" cx="358" cy="100" r="6"/>
+            <circle class="n" cx="410" cy="130" r="6"/>
+            <circle class="n" cx="46" cy="220" r="6"/>
+            <circle class="ring" cx="254" cy="284" r="17" stroke="#1F3A36" stroke-width="2"/>
+            <text x="254" y="289">OH</text>
+          </svg>
+          </div>
+        </div>
+        <div class="loupe lens warp" aria-hidden="true">
+          <span class="lg-glass"></span><span class="lg-ring"></span><span class="lg-shine"></span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -271,6 +407,61 @@ footer{background:var(--pine);color:#9DB5AC;font-size:.9rem;padding:0 0 28px}
   <div class="wrap">© <span id="y"></span> Siddharth Sachin Pharande</div>
 </footer>
 
-<script>document.getElementById("y").textContent=new Date().getFullYear();</script>
+<script>
+document.getElementById("y").textContent=new Date().getFullYear();
+(function(){
+  var root=document.documentElement;
+  var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var chromium=navigator.userAgentData&&navigator.userAgentData.brands.some(function(b){return b.brand==="Chromium"});
+  if(chromium)root.classList.add("refract");   /* SVG filters inside backdrop-filter only work in Chromium */
+
+  var svg=document.querySelector(".defs");
+  if(reduce&&svg.pauseAnimations)svg.pauseAnimations();
+
+  /* hovering a warping lens eases its refraction up, then back */
+  var maps=[].map.call(document.querySelectorAll("feDisplacementMap"),function(m){return{m:m,base:+m.dataset.s}});
+  var k=1,t=1,raf=0;
+  function step(){
+    k+=(t-k)*.12;
+    maps.forEach(function(o){o.m.setAttribute("scale",(o.base*k).toFixed(1))});
+    raf=Math.abs(t-k)>.004?requestAnimationFrame(step):0;
+  }
+  function target(v){t=v;if(!raf)raf=requestAnimationFrame(step)}
+  document.querySelectorAll(".warp").forEach(function(el){
+    el.addEventListener("pointerenter",function(){target(1.45)});
+    el.addEventListener("pointerleave",function(){target(1)});
+  });
+
+  /* specular sheen follows the pointer across every glass surface */
+  document.querySelectorAll(".lens,.tile,.item,.contact .wrap>div:last-child").forEach(function(el){
+    el.addEventListener("pointermove",function(e){
+      var r=el.getBoundingClientRect();
+      el.style.setProperty("--mx",(e.clientX-r.left)+"px");
+      el.style.setProperty("--my",(e.clientY-r.top)+"px");
+    });
+  });
+
+  /* the loupe drifts over the molecule on its own until someone grabs it */
+  var stage=document.querySelector(".molstage"),loupe=stage.querySelector(".loupe");
+  var x=0,y=0,auto=!reduce,drag=false,ox=0,oy=0,visible=true;
+  function room(){return{w:Math.max(0,stage.clientWidth-loupe.offsetWidth),h:Math.max(0,stage.clientHeight-loupe.offsetHeight)}}
+  function place(nx,ny){var b=room();x=Math.min(b.w,Math.max(0,nx));y=Math.min(b.h,Math.max(0,ny));loupe.style.translate=x+"px "+y+"px"}
+  function drift(now){
+    if(!auto)return;
+    if(visible){var b=room();place(b.w*(.5+.46*Math.sin(now*.00031)),b.h*(.5+.44*Math.sin(now*.00047+1.3)))}
+    requestAnimationFrame(drift);
+  }
+  var b0=room();place(b0.w*.62,b0.h*.58);
+  if(auto){
+    requestAnimationFrame(drift);
+    if("IntersectionObserver" in window)new IntersectionObserver(function(en){visible=en[0].isIntersecting}).observe(stage);
+  }
+  loupe.addEventListener("pointerdown",function(e){auto=false;drag=true;ox=e.clientX-x;oy=e.clientY-y;loupe.setPointerCapture(e.pointerId)});
+  loupe.addEventListener("pointermove",function(e){if(drag)place(e.clientX-ox,e.clientY-oy)});
+  loupe.addEventListener("pointerup",function(){drag=false});
+  loupe.addEventListener("pointercancel",function(){drag=false});
+  addEventListener("resize",function(){place(x,y)});
+})();
+</script>
 </body>
 </html>
